@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 #define MAXWORD 100
 #define getch() getchar()
@@ -13,15 +14,17 @@ int move(char *, int, char);
 
 int main()
 {
-        char *encrypted_word;
-        char *dic = "abcdefghijklm";
+        char *encrypted_word, *decrypt_word;
+        char *dic = "abcdefghijk";
         char word[MAXWORD];
         int clave = 10;
         while((getword(word, MAXWORD)) != EOF){
                 if(isalpha(word[0])){
-                        printf("Word: %s", word);
+                        printf("Word: %s \n", word);
                         encrypted_word = encrypt(word, dic, clave);
-                        printf("Encrypt word: %s", encrypted_word);
+                        printf("Encrypt word: %s \n", encrypted_word);
+                        decrypt_word = decrypt(encrypted_word, dic, clave);
+                        printf("Decrypt word: %s \n", decrypt_word);
                 }
         }
         return 0;
@@ -29,14 +32,38 @@ int main()
 
 char *encrypt(char *s, char *diccionary, int clave)
 {
-        int i, j;
+        char *encrypted_word = malloc(sizeof(char) * strlen(s));
+        int i, j, new_character;
         int displace = get_displace(diccionary, clave);
         char concat_word[MAXWORD];
         for(i = 0; i<strlen(s); i++){
-                s[i] = s[move(diccionary, displace, s[i])];
-                printf("%c \n", s[i]);
+                new_character = move(diccionary, displace, s[i]);
+                if (new_character == -1){
+                        new_character = i;
+                        encrypted_word[i] = s[new_character];
+                }else{
+                        encrypted_word[i] = diccionary[new_character];
+                }
         }
-        return s;
+        return encrypted_word;
+}
+
+char *decrypt(char *s, char *diccionary, int clave)
+{
+        char *decrypted_word = malloc(sizeof(char) * strlen(s));
+        int i, j, new_character;
+        int displace = get_displace(diccionary, clave);
+        char concat_word[MAXWORD];
+        for(i = 0; i<strlen(s); i++){
+                new_character = move(diccionary, -displace, s[i]);
+                if (new_character == -1){
+                        new_character = i;
+                        decrypted_word[i] = s[new_character];
+                }else{
+                        decrypted_word[i] = diccionary[new_character];
+                }
+        }
+        return decrypted_word;
 }
 
 int move(char *diccionary, int displace, char word)
@@ -49,10 +76,13 @@ int move(char *diccionary, int displace, char word)
                         if (desp_word > len_dicc){
                                 desp_word = displace - (len_dicc - i);
                         }
+                        if (desp_word < 0){
+                                desp_word = len_dicc + desp_word;
+                        }
                         return desp_word;
                 }
         }
-        return i; // if word not found in diccionary return same position
+        return -1; // if word not found in diccionary return -1
 }
 
 int get_displace(char *diccionary, int clave)
