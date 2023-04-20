@@ -32,7 +32,6 @@ int main()
 
 char *encrypt(char *s, char *diccionary, int clave)
 {
-        char *encrypted_word = malloc(sizeof(char) * strlen(s));
         int i, j, new_character;
         int displace = get_displace(diccionary, clave);
         char concat_word[MAXWORD];
@@ -40,17 +39,16 @@ char *encrypt(char *s, char *diccionary, int clave)
                 new_character = move(diccionary, displace, s[i]);
                 if (new_character == -1){
                         new_character = i;
-                        encrypted_word[i] = s[new_character];
+                        s[i] = s[new_character];
                 }else{
-                        encrypted_word[i] = diccionary[new_character];
+                        s[i] = diccionary[new_character];
                 }
         }
-        return encrypted_word;
+        return s;
 }
 
 char *decrypt(char *s, char *diccionary, int clave)
 {
-        char *decrypted_word = malloc(sizeof(char) * strlen(s));
         int i, j, new_character;
         int displace = get_displace(diccionary, clave);
         char concat_word[MAXWORD];
@@ -58,12 +56,12 @@ char *decrypt(char *s, char *diccionary, int clave)
                 new_character = move(diccionary, -displace, s[i]);
                 if (new_character == -1){
                         new_character = i;
-                        decrypted_word[i] = s[new_character];
+                        s[i] = s[new_character];
                 }else{
-                        decrypted_word[i] = diccionary[new_character];
+                        s[i] = diccionary[new_character];
                 }
         }
-        return decrypted_word;
+        return s;
 }
 
 int move(char *diccionary, int displace, char word)
