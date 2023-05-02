@@ -8,7 +8,7 @@ int palindrome(char *);
 
 int main()
 {
-        char *s = "ana";
+        char *s = "pescado";
         char *t = "reconocer";
         printf("%d \n", palindrome(s));
         printf("%d \n", palindrome(t));
@@ -28,5 +28,6 @@ int palindrome(char *s)
             return 1;
         }
 
+        free(word);
         return 0;
 }
