@@ -34,7 +34,7 @@ void compare(FILE *ifp, FILE *ofp)
 {
     char c1[MAXLINE], c2[MAXLINE];
     int contador = 0;
-    while ((fgets(c1, sizeof(c1), ifp)) != NULL && (fgets(c2, sizeof(c2), ofp)) != NULL){
+    while ((fgets(c1, sizeof(c1), ifp)) != NULL && (fgets(c2, sizeof(c2), ofp)) != NULL){ //read line by line
         contador ++;
         if (strcmp(c1,c2) != 0){
             printf("Linea %d : %s \n", contador, c1);
