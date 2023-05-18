@@ -32,7 +32,6 @@ main(int argc, char *argv[])
 
 char *eliminar_duplicados(char *s)
 {
-        char *k = s;
         char *p = s;
         char *character = (p+1);
         for(p; *p != '\0'; p++){ 
