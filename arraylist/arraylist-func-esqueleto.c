@@ -74,6 +74,8 @@ struct element *remove_element(struct arrayList *list, unsigned int position)
         return NULL;
     }
 
+    struct element *temp = list->arrayStart[position];
+
     //delete_element(list->arrayStart[position]);
     for (unsigned int i = position; i < list->usedQty-1; i++) {
         list->arrayStart[i] = list->arrayStart[i+1];
@@ -81,7 +83,7 @@ struct element *remove_element(struct arrayList *list, unsigned int position)
 
     list->arrayStart[list->usedQty -1] = NULL;
     list->usedQty--;
-    return list->arrayStart[position];
+    return temp;
 }
 
 struct element *search_remove_element(struct arrayList *list, char *search) 
