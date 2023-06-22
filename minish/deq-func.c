@@ -124,3 +124,37 @@ void deq_print(struct deq *deque)
         current = current->next;
     }
 }
+
+void deq_print_left(struct deq *deque, int times)
+{
+    // printf all str from elements from deque, left to right
+    if(deque == NULL || deque->count == 0){
+        printf("Deque is empty. \n");
+        return;
+    }
+
+    struct deq_elem *current = deque->rightmost; // Puntero auxiliar 
+    int count = 0;
+
+    while (current != NULL && count < times){ //recorro todos los elementos y voy imprimiendo, de leftmost a rightmost
+        printf("%i: %s",count, current->str);
+        current = current->prev;
+        count ++;
+    }   
+}
+
+
+void deq_free_memory(struct deq *deq_list)
+{
+    struct deq_elem *current = deq_list->leftmost; // Puntero auxiliar 
+    struct deq_elem *next;
+
+    while(current != NULL){
+        next = current->next;
+        free(current->str);
+        free(current);
+        current = next;
+    }
+
+    free(deq_list);
+}
