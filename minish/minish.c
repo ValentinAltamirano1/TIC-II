@@ -25,6 +25,7 @@ struct builtin_struct builtin_arr[] =
     {"help", builtin_help, HELP_HELP},
     {"dir", builtin_dir, HELP_DIR},
     {"history", builtin_history, HELP_HISTORY},
+    {"copiar", builtin_copiar, HELP_COPIAR},
     {NULL, NULL, NULL}
 };
 
